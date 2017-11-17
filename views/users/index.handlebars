@@ -1,0 +1,21 @@
+
+
+<main class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 align="center">All the Viking Thunder Gods</h2>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <div class="row">
+   {{#each users as |user|}}
+      <div class="col-xs-3">
+        <img src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 3.5em; padding:0;"/><br>
+        <div class="text-center" style="margin-top: 1em; padding-bottom: 1em; font-size: 1.5em;">
+          <p><a href="{{userPath user.id}}">{{user.username}}</a></p>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+  <div class="clearfix"></div>
+</main>
