@@ -39,10 +39,10 @@ module.exports = {
         type: Sequelize.TEXT
       },
       talents: {
-        type: Sequelize.TEXT
+        type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       favorites: {
-        type: Sequelize.TEXT
+        type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       whyMe: {
         type: Sequelize.TEXT

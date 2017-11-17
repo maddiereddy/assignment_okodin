@@ -28,18 +28,29 @@ module.exports = {
       'Petite'
     ];
 
+    var education = [
+      'High School',
+      'Bachelors',
+      'Graduate',
+      'Post Graduate',
+      'PhD',
+      'Medicine',
+      'Law',
+      'Engineering'
+    ];
+
     for (let i = 1; i <= 50; i++) {
 
       profiles.push({
         age: Math.floor(Math.random() * 60) + 20,
-        gender: ((i % 2) === 0) ? 'male': 'female',
+        gender: ((i % 2) === 0) ? 'Male': 'Female',
         maritalStatus: maritalStatus[Math.floor(Math.random() * maritalStatus.length)],
         height: Math.floor(Math.random() * 24) + 60,
         bodyType: bodyType[Math.floor(Math.random() * bodyType.length)],
         kids: faker.random.boolean(),
         pets: faker.random.boolean(),
         occupation: faker.name.jobTitle(),
-        education: faker.name.jobType(),
+        education: education[Math.floor(Math.random() * education.length)],
         aboutMe: faker.lorem.paragraph(),
         talents: [
           faker.company.catchPhrase(),

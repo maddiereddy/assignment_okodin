@@ -22,4 +22,17 @@ router.get('/', (req, res) => {
   .catch(e => res.status(500).send(e.stack));
 });
 
+router.get("/:id", (req, res) => {
+    User.find({
+      where: {
+        id: req.params.id
+      },
+      include: [{ model: Profile, include: [{ model: Location}] }]
+    })
+    .then(user => {
+	  res.render("users/show", { user });
+	});
+  });
+
+
 module.exports = router;

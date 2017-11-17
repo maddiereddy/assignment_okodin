@@ -1,0 +1,49 @@
+<div class="container-fluid" style="margin: 0em;  background-color: aliceblue">
+  <div class="row">
+    <div class="col-xs-12" style="height: 10em; border-bottom: 2px solid black;">
+        <img class="col-xs-6" src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 7em; padding:0;">
+        <div class="col-xs-6" style="margin-top: 3em; padding-bottom: 10em;">
+          <h2>{{user.usernamename}}</h2>
+          <h4>{{user.Profile.age}} years old, lives in {{user.Profile.Location.city}}</h4>
+        </div>
+    </div>
+  </div>
+  <div class="row" style="padding: 5em 0;">
+    <div class="col-xs-8 col-sm-offset-1">
+      <h4>About Me</h4>
+      <p>{{user.Profile.aboutMe}}</p>
+       <h4>Talents</h4>
+	      <ul>
+	        {{#each user.Profile.talents as |talent|}}
+	        <li>
+	          {{talent}}
+	        </li>
+	        {{/each}}
+	      </ul>
+	      <h4>Favorite Things</h4>
+	      <ul>
+	        {{#each user.Profile.favorites as |favorite|}}
+	        <li>
+	          {{favorite}}
+	        </li>
+	        {{/each}}
+	      </ul>
+      <h4>Why You Should Message Me</h4>
+      <p>{{user.Profile.whyMe}}</p>
+      <a href="#"><button class="btn btn-default btn-primary">Message Me!</button></a>
+    </div>
+    <div class="col-xs-3" >
+      <h4>Basic Info</h4>
+      <div style="border: 2px solid black; padding-left: 0.5em; background-color: #ceebfd">
+        <h5>Gender: {{user.Profile.gender}}<h5>
+        <h5>Status: {{user.Profile.maritalStatus}}<h5>
+        <h5>Height: {{user.Profile.height}}" (in inches)<h5>
+        <h5>Body Type: {{user.Profile.bodyType}}<h5>
+        <h5>Has kids: {{user.Profile.kids}}<h5>
+        <h5>Has pets: {{user.Profile.pets}}<h5>
+        <h5>Occupation: {{user.Profile.occupation}}<h5>
+        <h5>Education: {{user.Profile.education}}<h5>
+      </div>
+    </div>
+  </div>
+</div>
