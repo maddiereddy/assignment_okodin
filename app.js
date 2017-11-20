@@ -79,6 +79,9 @@ app.use('/', sessionsRouter);
 var usersRouter = require('./routers/users');
 app.use('/users', usersRouter);
 
+var searchRouter = require("./routers/search")(app);
+app.use("/search", searchRouter);
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------

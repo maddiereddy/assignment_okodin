@@ -1,0 +1,122 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-10 text-center">
+      <h3>Searching for {{search.status}}
+        {{#if search.gender}}
+        "{{search.gender}}s"
+        {{/if}}
+         ages upto "{{search.age}}" years old</h3>
+           <h3>
+         {{#if search.locationDistance}}
+         within "{{search.locationDistance}} miles" of you
+         {{/if}}
+          with "{{search.pets}}"</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#">Basics</a></li>
+        <li><a href="#">Appearance</a></li>
+        <li><a href="#">Status</a></li>
+        <li><a href="#">Occupation</a></li>
+        <li><a href="#">Education</a></li>
+        <li><a href="#">Children</a></li>
+        <li><a href="#">Pets</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="nav" style="border:2px solid black;">
+      <form action="/search" method="post">
+        <div class="form-group col-sm-1 col-sm-offset-1">
+          <label>Gender</label>
+          <div class="radio">
+            <label>
+              <input type="radio" value="male" name="user[profile][gender]"> Male
+            </label>
+            <label>
+              <input type="radio" value="female" name="user[profile][gender]"> Female
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="user_age">Age</label>
+          <select name="user[profile][age]" id="user_age" class="form-control">
+            <option value="100">Any</option>
+            <option value="20">20s</option>
+            <option value="30">30s</option>
+            <option value="40">40s</option>
+            <option value="50">50s</option>
+            <option value="60">60s</option>
+            <option value="70">70s</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="user_locationDistance">Distance Max</label>
+          <select name="user[profile][locationDistance]" id="user_locationDistance" class="form-control">
+            <option value="10000">Any</option>
+            <option value="100">100 miles</option>
+            <option value="50">50 miles</option>
+            <option value="25">25 miles</option>
+            <option value="10">10 miles</option>
+            <option value="5">5 miles</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="user_height">Height - Min</label>
+          <select name="user[profile][heightMin]" id="user_height" class="form-control">
+            <option value="0">Any</option>
+            <option value="60">5'</option>
+            <option value="66">5'6"</option>
+            <option value="72">6'</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="user_height">Height - Max</label>
+          <select name="user[profile][heightMax]" id="user_height" class="form-control">
+            <option value="200">All</option>
+            <option value="72">6'</option>
+            <option value="66">5'6"</option>
+            <option value="60">5'</option>
+            <option value="54">4'6"</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-2">
+          <label for="user_status">Status</label><br>
+            <label><input type="checkbox" name="user[profile][status]" value="single">Single</label><br>
+            <label><input type="checkbox" name="user[profile][status]" value="dating">Dating</label><br>
+            <label><input type="checkbox" name="user[profile][status]" value="married">Married</label>
+        </div>
+
+        <div class="col-sm-12" style="text-align:right;">
+          Search with the sort by <span class="caret"></span>
+        </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 col-sm-offset-10">
+      <input type="hidden" name="search" value="{{search}}">
+      <select onchange="this.form.submit()" name="sort" id="user_age" class="form-control">
+        <option value="">Sort By</option>
+        <option value="locationDistance">Distance</option>
+        <option value="age">Age</option>
+      </select>
+    </div>
+  </form>
+  </div>
+  <div class="row">
+    {{#if users}}
+      {{#each users as |user|}}
+      <div class="col-xs-4 col-md-3 col-lg-2 col-xl-1 text-center" style="margin: 2em; border: 2px solid black">
+        <a href="users/{{user.id}}"><img src="/images/{{user.Profile.picture}}" style="height:100%; width:100%; border-bottom: 2px solid black;">
+        <p>{{user.username}}</p></a>
+      </div>
+      {{/each}}
+    {{else}}
+      <div class="col-xs-12 text-center" style="margin: 2em; border: 2px solid black">
+        <h2>No Results</h2>
+      </div>
+    {{/if}}
+  </div>
+</div>

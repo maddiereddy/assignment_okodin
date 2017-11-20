@@ -3,7 +3,7 @@
     <div class="col-xs-12" style="height: 10em; border-bottom: 2px solid black;">
         <img class="col-xs-6" src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 7em; padding:0;">
         <div class="col-xs-6" style="margin-top: 3em; padding-bottom: 10em;">
-          <h2>{{user.usernamename}}</h2>
+          <h2>{{user.username}}</h2>
           <h4>{{user.Profile.age}} years old, lives in {{user.Profile.Location.city}}</h4>
         </div>
     </div>
@@ -39,7 +39,9 @@
         <h5>Status: {{user.Profile.maritalStatus}}<h5>
         <h5>Height: {{user.Profile.height}}" (in inches)<h5>
         <h5>Body Type: {{user.Profile.bodyType}}<h5>
-        <h5>Has kids: {{user.Profile.kids}}<h5>
+        {{#if user.Profile.kids}} <h5>Has kids: Yes<h5>
+        {{else}} <h5>Has kids: No<h5>
+        {{/if}}
         <h5>Has pets: {{user.Profile.pets}}<h5>
         <h5>Occupation: {{user.Profile.occupation}}<h5>
         <h5>Education: {{user.Profile.education}}<h5>

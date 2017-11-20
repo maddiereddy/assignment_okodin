@@ -27,7 +27,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       pets: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       occupation: {
         type: Sequelize.STRING
@@ -44,11 +44,28 @@ module.exports = {
       favorites: {
         type: Sequelize.ARRAY(Sequelize.TEXT)
       },
+      hobbies: {
+        type: Sequelize.ARRAY(Sequelize.TEXT)
+      },
       whyMe: {
         type: Sequelize.TEXT
       },
       picture: {
         type: Sequelize.STRING
+      },
+      lastLogin: {
+        allowNull: false,
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW")
+      },
+      likes: {
+        type: Sequelize.ARRAY(Sequelize.TEXT)
+      },
+      views: {
+        type: Sequelize.ARRAY(Sequelize.TEXT)
+      },
+      viewedBy: {
+        type: Sequelize.ARRAY(Sequelize.TEXT)
       },
       locationId: {
         type: Sequelize.INTEGER

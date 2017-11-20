@@ -30,6 +30,17 @@ module.exports = {
           }
         }
       },
+      state: {
+        type: Sequelize.STRING,
+        validate: {
+          notEmpty: {
+            msg: 'State cannot be empty!'
+          },
+          isAlpha: {
+            msg: 'State must only be letters!'
+          }
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

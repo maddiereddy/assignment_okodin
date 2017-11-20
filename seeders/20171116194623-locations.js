@@ -8,6 +8,7 @@ module.exports = {
     for (let i = 1; i <= 100; i++) {
       locations.push({
         city: faker.address.city(),
+        state: faker.address.state(),
         distance: Math.floor(Math.random() * 100) + 1
       });
     }

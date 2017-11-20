@@ -8,6 +8,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      fname: {
+        type: Sequelize.STRING
+      },
+      lname: {
+        type: Sequelize.STRING
+      },
       username: {
         type: Sequelize.STRING,
         validate: {

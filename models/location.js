@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
 
   var Location = sequelize.define('Location', {
     distance: DataTypes.INTEGER,
-    city: DataTypes.STRING
+    city: DataTypes.STRING,
+    state: DataTypes.STRING
   });
       
   Location.associate = function(models) {
