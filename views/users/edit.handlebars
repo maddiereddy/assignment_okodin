@@ -1,0 +1,57 @@
+<div class="container-fluid" style="margin: 0em;  background-color: aliceblue">
+  <form action="/users/{{user.id}}" method="post">
+
+    <div class="row">
+      <div class="col-xs-12" style="height: 10em; border-bottom: 2px solid black;">
+          <img class="col-xs-6" src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 7em; padding:0;">
+          <div class="col-xs-6" style="margin-top: 3em; padding-bottom: 10em;">
+            <h4>
+              <input name="user[fname]"type="text" value="{{user.fname}}"> 
+              <input name="user[lname]" type="text" value="{{user.lname}}">
+            </h4>
+            <h4>
+              <input name="user[profile][age]" type="text" value="{{user.Profile.age}}" /> years old, lives in 
+              <input name="user[profile][location][city]" type="text" value="{{user.Profile.Location.city}}" />
+              <input name="user[profile][location][state]" type="text" value="{{user.Profile.Location.state}}" />
+            </h4>
+            
+          </div>
+      </div>
+    </div>
+
+    <div class="row" style="padding: 5em 0;">
+      <div class="col-xs-8 col-sm-offset-1">
+        <h4>About Me</h4>
+        <p><textarea name="user[profile][aboutMe]" rows="10" cols="70"> {{user.Profile.aboutMe}}</textarea></p>
+        <h4>Talents</h4>
+        <p><textarea name="user[profile][talents]" rows="10" cols="70"> 
+          {{#each user.Profile.talents as |talent|}}
+            {{talent}}
+          {{/each}}
+        </textarea></p>
+        <h4>Favorite Things</h4>
+        <p><textarea name="user[profile][favoriteThings]" rows="10" cols="70">
+          {{#each user.Profile.favorites as |favorite|}}
+            {{favorite}}
+          {{/each}}
+        </textarea></p>
+        <h4>Why You Should Message Me</h4>
+        <p><textarea name="user[profile][whyMe]" rows="10" cols="70"> {{user.Profile.whyMe}}</textarea></p>
+        <a href="#"><button class="btn btn-default btn-success">Save Changes</button></a>
+      </div>
+      <div class="col-xs-3" >
+        <h4>Basic Info</h4>
+        <div style="border: 2px solid black; padding-left: 0.5em; background-color: #ceebfd">
+          <h5><input name="user[profile][gender]" type="text" value="{{user.Profile.gender}}"><h5>
+          <h5><input name="user[profile][maritalStatus]" type="text" value="{{user.Profile.maritalStatus}}"><h5>
+          <h5><input name="user[profile][height]" type="text" value="{{user.Profile.height}}"> (in inches)<h5>
+          <h5><input name="user[profile][bodyType]" type="text" value="{{user.Profile.bodyType}}"><h5>
+          <h5><input name="user[profile][kids]" type="text" value="{{user.Profile.kids}}"># of Kids<h5>
+          <h5><input name="user[profile][pets]" type="text" value="{{user.Profile.pets}}"> pets<h5>
+          <h5><input name="user[profile][occupation]" type="text" value="{{user.Profile.occupation}}"><h5>
+          <h5><input name="user[profile][education]" type="text" value="{{user.Profile.education}}"><h5>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

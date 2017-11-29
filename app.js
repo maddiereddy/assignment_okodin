@@ -22,6 +22,10 @@ app.use(cookieSession({
 app.use((req, res, next) => {
   res.locals.session = req.session;
   res.locals.currentUser = req.session.currentUser;
+  if (req.session.currentUser) {
+    res.locals.userid = req.session.currentUser.id;
+  }
+
   next();
 });
 
@@ -82,11 +86,16 @@ app.use('/users', usersRouter);
 var searchRouter = require("./routers/search")(app);
 app.use("/search", searchRouter);
 
+var viewsRouter = require("./routers/views")(app);
+app.use("/views", viewsRouter);
+
+
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
 var expressHandlebars = require('express-handlebars');
 var helpers = require('./helpers');
+//var searchHelper = require('./helpers/search-helper');
 
 
 var hbs = expressHandlebars.create({
@@ -94,7 +103,6 @@ var hbs = expressHandlebars.create({
   partialsDir: 'views/',
   defaultLayout: 'application'
 });
-
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');

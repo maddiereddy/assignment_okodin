@@ -6,7 +6,6 @@ module.exports = {
 
     var profiles = [];
     var maritalStatus = [
-      '---',
       'Single',
       'Engaged',
       'Married',

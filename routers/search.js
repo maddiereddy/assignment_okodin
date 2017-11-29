@@ -23,45 +23,99 @@ module.exports = app => {
   });
 
   router.post("/", (req, res) => {
+    var maritalStatus = [
+      'Single',
+      'Engaged',
+      'Married',
+      'In a civil union',
+      'In a relationship',
+      `It's complicated`,
+      'Separated',
+      'Divorced',
+      'Widowed'];
+
+    var bodyType = [
+      'Slender',
+      'Average',
+      'Curvy',
+      'Chubby',
+      'Toned',
+      'Heavyset',
+      'Tall',
+      'Petite'
+    ];
+
+     var education = [
+      'High School',
+      'Bachelors',
+      'Graduate',
+      'Post Graduate',
+      'PhD',
+      'Medicine',
+      'Law',
+      'Engineering'
+    ];
+
+    var status = (req.body.user.profile.status === "Any") ? maritalStatus : [req.body.user.profile.status];
+    var gender = [req.body.user.profile.gender] || ["Male", "Female"];
+    var bodyT = (req.body.user.profile.bodyType === "Any") ? bodyType : [req.body.user.profile.bodyType];
+    var education = (req.body.user.profile.education === "Any") ? education : [req.body.user.profile.education];
+    var kids = [req.body.user.profile.kids] || [false, true];
+
+    var order = (req.body.sort !== "distance") ? [[User.associations.Profile, req.body.sort]] : [[User.associations.Profile, Profile.associations.Location, "distance"]];
+    var lastSort = req.body.sort || "age";
+
     User.findAll({
       include: [
         {
           model: Profile,
-          include: [{ model: Location }],
+          include: [
+	          { 
+	          	model: Location, 
+	          	where: { 
+	          		distance: {
+	          			$lt: req.body.user.profile.location.distance
+	          		}
+            	}
+	          }
+	        ],
           where: {
-            gender: req.body.user.profile.gender,
-            age: {
-              $lt: req.body.user.profile.age
+            gender: {
+              $in: gender
             },
-            locationDistance: {
-              $lt: req.body.user.profile.locationDistance
+            age: {
+              $between: [req.body.user.profile.ageMin, req.body.user.profile.ageMax]
+            },
+            maritalStatus: {
+              $in: status
             },
             height: {
-              $and: [
-                {
-                  $gte: req.body.user.profile.heightMin
-                },
-                {
-                  $lte: req.body.user.profile.heightMax
-                }
-              ]
+             $between: [req.body.user.profile.heightMin, req.body.user.profile.heightMax]
+            },
+            bodyType: {
+              $in: bodyT
             },
             pets: {
-              $contains: req.body.user.profile.pets
+              $contains: [req.body.user.profile.pets]
+            },
+            education: {
+              $in: education
+            },
+            kids: {
+              $in: kids
             }
           }
         }
       ],
       where: {
         email: {
-          $ne: req.session.currentSession.email
+          $ne: req.session.currentUser.email
         }
       },
-      order: [[User.associations.Profile, req.body.sort, "DESC"]]
+      order: order
     }).then(users => {
-      //users = userFiltering(req.body.user.profile, users);
       var search = req.body.user.profile;
-      res.render("search/index", { users, search });
+      res.render("search/index", { users, search, lastSort });
     });
   });
 

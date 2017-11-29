@@ -59,13 +59,13 @@ module.exports = {
         defaultValue: Sequelize.fn("NOW")
       },
       likes: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
       },
       views: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
       },
       viewedBy: {
-        type: Sequelize.ARRAY(Sequelize.TEXT)
+        type: Sequelize.ARRAY(Sequelize.INTEGER)
       },
       locationId: {
         type: Sequelize.INTEGER

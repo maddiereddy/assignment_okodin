@@ -1,122 +1,241 @@
 <div class="container-fluid">
-  <div class="row">
-    <div class="col-sm-10 text-center">
+  <div class="row" style="margin: 0 80px 20px 80px">
+    <div class="col-sm-12 text-center">
       <h3>Searching for {{search.status}}
         {{#if search.gender}}
         "{{search.gender}}s"
-        {{/if}}
-         ages upto "{{search.age}}" years old</h3>
-           <h3>
-         {{#if search.locationDistance}}
-         within "{{search.locationDistance}} miles" of you
+        {{/if}} ages "{{search.ageMin}}" to "{{search.ageMax}}" years old
+      </h3>
+      <h3>
+         {{#if search.location.distance}}
+         within "{{search.location.distance}} miles" of you
          {{/if}}
-          with "{{search.pets}}"</h3>
+      </h3>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-12 text-center">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Basics</a></li>
-        <li><a href="#">Appearance</a></li>
-        <li><a href="#">Status</a></li>
-        <li><a href="#">Occupation</a></li>
-        <li><a href="#">Education</a></li>
-        <li><a href="#">Children</a></li>
-        <li><a href="#">Pets</a></li>
-      </ul>
+
+  <form action="/search" method="post">
+    
+    <div class="row"  style="margin: 0 80px">
+      <div class="col-sm-12 text-center">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#basic">Basics</a></li>
+          <li><a data-toggle="tab" href="#appearance">Appearance</a></li>
+          <li><a data-toggle="tab" href="#background">Background</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="nav" style="border:2px solid black;">
-      <form action="/search" method="post">
-        <div class="form-group col-sm-1 col-sm-offset-1">
+
+    <div class="row tab-content" style="border:2px solid blue; margin: 0 80px">
+      <div id="basic" class="tab-pane fade in active" style="margin: 20px 0;">
+        
+        <div class="form-group col-sm-2 col-sm-offset-1">
           <label>Gender</label>
           <div class="radio">
             <label>
-              <input type="radio" value="male" name="user[profile][gender]"> Male
+              <input type="radio" value="Male" name="user[profile][gender]" {{{setChecked 'Male' search.gender}}}> Male
             </label>
             <label>
-              <input type="radio" value="female" name="user[profile][gender]"> Female
+              <input type="radio" value="Female" name="user[profile][gender]" {{{setChecked 'Female' search.gender}}}> Female
             </label>
           </div>
         </div>
+
         <div class="form-group col-sm-2">
-          <label for="user_age">Age</label>
-          <select name="user[profile][age]" id="user_age" class="form-control">
-            <option value="100">Any</option>
-            <option value="20">20s</option>
-            <option value="30">30s</option>
-            <option value="40">40s</option>
-            <option value="50">50s</option>
-            <option value="60">60s</option>
-            <option value="70">70s</option>
+          <label for="user_age">Min Age</label>
+          <select name="user[profile][ageMin]" id="user_age" class="form-control">
+            {{#setSelect search.ageMin}}
+              <option value="0">Any</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+              <option value="70">70</option>
+            {{/setSelect}}
           </select>
         </div>
+
+        <div class="form-group col-sm-2">
+          <label for="user_age">Max Age</label>
+          <select name="user[profile][ageMax]" id="user_age" class="form-control">
+            {{#setSelect search.ageMax}}
+              <option value="100">Any</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+              <option value="70">70</option>
+              <option value="80">80</option>
+            {{/setSelect}}
+          </select>
+        </div>
+
         <div class="form-group col-sm-2">
           <label for="user_locationDistance">Distance Max</label>
-          <select name="user[profile][locationDistance]" id="user_locationDistance" class="form-control">
-            <option value="10000">Any</option>
-            <option value="100">100 miles</option>
-            <option value="50">50 miles</option>
-            <option value="25">25 miles</option>
-            <option value="10">10 miles</option>
-            <option value="5">5 miles</option>
+          <select name="user[profile][location][distance]" id="user_locationDistance" class="form-control">
+            {{#setSelect search.location.distance}}
+              <option value="10000">Any</option>
+              <option value="100">100 miles</option>
+              <option value="50">50 miles</option>
+              <option value="25">25 miles</option>
+              <option value="10">10 miles</option>
+              <option value="5">5 miles</option>
+            {{/setSelect}}
           </select>
         </div>
+
         <div class="form-group col-sm-2">
+          <label for="user_status">Status</label><br>
+          <select name="user[profile][status]" id="user_status" class="form-control">
+            {{#setSelect search.status}}
+              <option value="Any">Any</option>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Separated">Separated</option>
+              <option value="Divorced">Divorced</option>
+              <option value="Widowed">Widowed</option>
+              <option value="Engaged">Engaged</option>
+              <option value="In a civil union">In a civil union</option>
+              <option value="In a relationship">In a relationship</option>
+              <option value=`It's complicated`>It's complicated</option>
+            {{/setSelect}}
+          </select>
+        </div>
+      </div>
+
+      <div id="appearance" class="tab-pane fade" style="margin: 20px 0;">
+        <div class="form-group col-sm-2 col-sm-offset-2">
           <label for="user_height">Height - Min</label>
           <select name="user[profile][heightMin]" id="user_height" class="form-control">
+            {{#setSelect search.heightMin}}
             <option value="0">Any</option>
-            <option value="60">5'</option>
+            <option value="60">5'0"</option>
             <option value="66">5'6"</option>
-            <option value="72">6'</option>
+            <option value="72">6'0"</option>
+            {{/setSelect}}
           </select>
         </div>
+
         <div class="form-group col-sm-2">
           <label for="user_height">Height - Max</label>
           <select name="user[profile][heightMax]" id="user_height" class="form-control">
-            <option value="200">All</option>
-            <option value="72">6'</option>
-            <option value="66">5'6"</option>
-            <option value="60">5'</option>
-            <option value="54">4'6"</option>
+            {{#setSelect search.heightMax}}
+              <option value="100">Any</option>
+              <option value="66">5'6"</option>
+              <option value="72">6'0"</option>
+              <option value="78">6'6"</option>
+            {{/setSelect}}
           </select>
         </div>
+
         <div class="form-group col-sm-2">
-          <label for="user_status">Status</label><br>
-            <label><input type="checkbox" name="user[profile][status]" value="single">Single</label><br>
-            <label><input type="checkbox" name="user[profile][status]" value="dating">Dating</label><br>
-            <label><input type="checkbox" name="user[profile][status]" value="married">Married</label>
+          <label for="user_bodyType">Body Type</label>
+          <select name="user[profile][bodyType]" id="user_bodyType" class="form-control">
+            {{#setSelect search.bodyType}}
+              <option value="Any">Any</option>
+              <option value="Slender">Slender</option>
+              <option value="Average">Average</option>
+              <option value="Curvy">Curvy</option>
+              <option value="Chubby">Chubby</option>
+              <option value="Toned">Toned</option>
+              <option value="Heavyset">Heavyset</option>
+              <option value="Tall">Tall</option>
+              <option value="Petite">Petite</option>
+            {{/setSelect}}
+          </select>
+        </div>
+      </div>
+
+      <div id="background" class="tab-pane fade" style="margin: 20px 0;">
+        <div class="form-group col-sm-2 col-sm-offset-2">
+          <label>Children</label>
+          <div class="radio">
+            <label>
+              <input type="radio" value="false" name="user[profile][kids]" {{{setChecked 'false' search.kids}}}> None
+            </label>
+            <label>
+              <input type="radio" value="true" name="user[profile][kids]" {{{setChecked 'true' search.kids}}}> Some
+            </label>
+          </div>
         </div>
 
-        <div class="col-sm-12" style="text-align:right;">
-          Search with the sort by <span class="caret"></span>
+        <div class="form-group col-sm-2">
+          <label for="user_pets">Pets</label><br>
+          <label>
+            <input type="radio" name="user[profile][pets]" value="None" {{{setChecked 'None' search.pets}}}>None
+          </label><br>
+          <label>
+            <input type="radio" name="user[profile][pets]" value="Dogs" {{{setChecked 'Dogs' search.pets}}}>Dogs
+          </label><br>
+          <label>
+            <input type="radio" name="user[profile][pets]" value="Cats" {{{setChecked 'Cats' search.pets}}}>Cats
+          </label><br>
+          <label>
+            <input type="radio" name="user[profile][pets]" value="Horses" {{{setChecked 'Horses' search.pets}}}>Horses
+          </label><br>
+          <label>
+            <input type="radio" name="user[profile][pets]" value="Other" {{{setChecked 'Other' search.pets}}}>Other
+          </label>
+        </div>
+
+        <div class="form-group col-sm-2">
+          <label for="user_education">Education Level</label>
+          <select name="user[profile][education]" id="user_education" class="form-control">
+            {{#setSelect search.education}}
+              <option value="Any">Any</option>
+              <option value="High School">High School</option>
+              <option value="Bachelors">Bachelors</option>
+              <option value="Graduate">Graduate</option>
+              <option value="Post Graduate">Post Graduate</option>
+              <option value="PhD">PhD</option>
+              <option value="Bachelors">Bachelors</option>
+              <option value="Medicine">Medicine</option>
+              <option value="Law">Law</option>
+              <option value="Engineering">Engineering</option>
+            {{/setSelect}}
+          </select>
         </div>
       </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-2 col-sm-offset-10">
-      <input type="hidden" name="search" value="{{search}}">
-      <select onchange="this.form.submit()" name="sort" id="user_age" class="form-control">
-        <option value="">Sort By</option>
-        <option value="locationDistance">Distance</option>
-        <option value="age">Age</option>
-      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-sm-2 col-sm-offset-5"  style="padding-top: 10px">
+        <input type="submit" class="btn btn-primary btn-block" value="Search" style="font-size: 1.5em">
+      </div>
+      
+      
+      <div class="col-sm-2 col-sm-offset-2">
+        <input type="hidden" name="search" value="{{search}}">
+
+        Sort By:<select onchange="this.form.submit()" name="sort" id="user_sort" class="form-control">
+          {{#setSelect lastSort}}
+            <option value="age">Age</option>
+            <option value="distance">Distance</option>
+            <option value="lastLogin">Last Login</option>
+          {{/setSelect}}
+        </select>
+      </div>
     </div>
   </form>
-  </div>
-  <div class="row">
+  
+  <div class="clearfix"></div>
+  <div class="row" style="background-color: aliceblue">
     {{#if users}}
-      {{#each users as |user|}}
-      <div class="col-xs-4 col-md-3 col-lg-2 col-xl-1 text-center" style="margin: 2em; border: 2px solid black">
-        <a href="users/{{user.id}}"><img src="/images/{{user.Profile.picture}}" style="height:100%; width:100%; border-bottom: 2px solid black;">
-        <p>{{user.username}}</p></a>
+   {{#each users as |user|}}
+      <div class="col-xs-3">
+        <img src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 3.5em; padding:0;"/><br>
+        <div class="text-center" style="margin-top: 1em; padding-bottom: 1em; font-size: 1.5em;">
+          <p><a href="users/{{user.id}}">{{user.username}}</a></p>
+          <p><a href="views/likeUser/{{user.id}}"><h4>Like Me!</h4></a></p>
+        </div>
       </div>
-      {{/each}}
+    {{/each}}
     {{else}}
       <div class="col-xs-12 text-center" style="margin: 2em; border: 2px solid black">
         <h2>No Results</h2>
       </div>
     {{/if}}
   </div>
+  <div class="clearfix"></div>
 </div>

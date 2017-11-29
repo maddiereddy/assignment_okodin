@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     whyMe: DataTypes.TEXT,
     picture: DataTypes.STRING,
     lastLogin: DataTypes.DATE,
-    likes: DataTypes.ARRAY(DataTypes.TEXT),
-    views: DataTypes.ARRAY(DataTypes.TEXT),
-    viewedBy: DataTypes.ARRAY(DataTypes.TEXT),
+    likes: DataTypes.ARRAY(DataTypes.INTEGER),
+    views: DataTypes.ARRAY(DataTypes.INTEGER),
+    viewedBy: DataTypes.ARRAY(DataTypes.INTEGER),
     locationId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER
   });

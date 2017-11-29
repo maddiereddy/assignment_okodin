@@ -24,7 +24,17 @@ module.exports = (app) => {
   // New
   var onNew = (req, res) => {
     if (req.session.currentUser) {
-      res.redirect('/users');
+      // finds current user's profile and redirects them there
+      User.findOne({
+        where: {
+          id: req.session.currentUser.id
+        }
+      })
+      .then(user => {
+          res.redirect('/users');
+        })
+        .catch(e => res.status(500).send(e.stack));
+      
     } else {
       res.render('sessions/new');
     }
@@ -36,23 +46,27 @@ module.exports = (app) => {
   // Create
   router.post('/sessions', (req, res) => {
     User.findOne({
-      username: req.body.username,
-      email: req.body.email
+      where: {
+        username: req.body.username,
+        email: req.body.email
+      }
     })
-      .then((user) => {
-        if (user) {
-          req.session.currentUser = {
-            username: user.username,
-            email: user.email,
-            id: user.id,
-            _id: user._id
-          };
-          res.redirect('/users');
-        } else {
-          res.redirect('/login');
-        }
-      })
-      .catch((e) => res.status(500).send(e.stack));
+    .then((user) => {
+      if (user) {
+        req.session.currentUser = {
+          username: user.username,
+          email: user.email,
+          id: user.id,
+          _id: user._id
+        };
+        req.flash('success', 'Welcome back!');
+        res.redirect('/users');
+      } else {
+        req.flash('error', 'Error: User could not be found.');
+        res.redirect('/login');
+      }
+    })
+    .catch((e) => res.status(500).send(e.stack));
   });
 
 

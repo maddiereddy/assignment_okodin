@@ -12,7 +12,7 @@ module.exports = {
           lname: `Bar${i}`,
           username: `FooBar${i}`,
           email: `FooBar${i}@gmail.com`,
-          profileId: i + 1
+          profileId: i
         });
       }
 
