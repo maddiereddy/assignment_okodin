@@ -6,6 +6,7 @@ var Profile = models.Profile;
 var Location = models.Location;
 var sequelize = models.sequelize;
 var db = require('./../models/index');
+const { parseParams } = require('./../helpers/profile_helper');
 
 
 // ----------------------------------------
@@ -90,6 +91,52 @@ router.get("/:id", (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  let profileParams = parseParams(req.body.user.profile);
+  let city = req.body.user.profile.location.city;
+  let state = req.body.user.profile.location.state;
+  let userId = req.session.currentUser.id;
+
+  sequelize.transaction(t => {
+    return Profile.findOrCreate({
+      default: profileParams,
+      where: { userId: userId },
+      transaction: t
+    })
+    .spread(profile => {
+      return Profile.update(profileParams, {
+        where: { id: profile.id },
+        transaction: t
+      });
+    })
+    .then(() => {
+      return Location.findOrCreate({
+        default: {
+          city: city,
+          state: state
+        },
+        where: { city: city, state: state},
+        transaction: t
+      });
+    })
+    .spread(location => {
+      return Profile.update({locationId: location.id}, {
+        where: {userId: userId},
+        limit: 1,
+        transaction: t
+      });
+    })
+    .then(() => {
+      res.redirect("/users/" + req.params.id);
+    })
+    .catch(e => {
+      if (e.errors) {
+        e.errors.forEach((err) => req.flash('error', err.message));
+        res.redirect('back');
+      } else {
+        res.status(500).send(e.stack);
+      }
+    });
+  });
   
 });
 

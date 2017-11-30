@@ -5,51 +5,140 @@
       <div class="col-xs-12" style="height: 10em; border-bottom: 2px solid black;">
           <img class="col-xs-6" src="/images/{{user.Profile.picture}}" style="height: 12em; width: 12em; border: 2px solid black; margin-top: 2em; margin-left: 7em; padding:0;">
           <div class="col-xs-6" style="margin-top: 3em; padding-bottom: 10em;">
-            <h4>
-              <input name="user[fname]"type="text" value="{{user.fname}}"> 
-              <input name="user[lname]" type="text" value="{{user.lname}}">
-            </h4>
-            <h4>
-              <input name="user[profile][age]" type="text" value="{{user.Profile.age}}" /> years old, lives in 
-              <input name="user[profile][location][city]" type="text" value="{{user.Profile.Location.city}}" />
-              <input name="user[profile][location][state]" type="text" value="{{user.Profile.Location.state}}" />
-            </h4>
-            
+            <h4>Name: <i>{{user.fname}} {{user.lname}}</i></h4>
+            <h4>Username: <i>{{user.username}}</i></h4>
+            <h4>Email: <i>{{user.email}}</i></h4>
           </div>
       </div>
     </div>
-
-    <div class="row" style="padding: 5em 0;">
-      <div class="col-xs-8 col-sm-offset-1">
-        <h4>About Me</h4>
-        <p><textarea name="user[profile][aboutMe]" rows="10" cols="70"> {{user.Profile.aboutMe}}</textarea></p>
-        <h4>Talents</h4>
-        <p><textarea name="user[profile][talents]" rows="10" cols="70"> 
-          {{#each user.Profile.talents as |talent|}}
-            {{talent}}
-          {{/each}}
-        </textarea></p>
-        <h4>Favorite Things</h4>
-        <p><textarea name="user[profile][favoriteThings]" rows="10" cols="70">
-          {{#each user.Profile.favorites as |favorite|}}
-            {{favorite}}
-          {{/each}}
-        </textarea></p>
-        <h4>Why You Should Message Me</h4>
-        <p><textarea name="user[profile][whyMe]" rows="10" cols="70"> {{user.Profile.whyMe}}</textarea></p>
-        <a href="#"><button class="btn btn-default btn-success">Save Changes</button></a>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-4" style="margin-top:20px; color:blue">
+          <h2>Profile Details</h2>
+        </div>
       </div>
-      <div class="col-xs-3" >
-        <h4>Basic Info</h4>
-        <div style="border: 2px solid black; padding-left: 0.5em; background-color: #ceebfd">
-          <h5><input name="user[profile][gender]" type="text" value="{{user.Profile.gender}}"><h5>
-          <h5><input name="user[profile][maritalStatus]" type="text" value="{{user.Profile.maritalStatus}}"><h5>
-          <h5><input name="user[profile][height]" type="text" value="{{user.Profile.height}}"> (in inches)<h5>
-          <h5><input name="user[profile][bodyType]" type="text" value="{{user.Profile.bodyType}}"><h5>
-          <h5><input name="user[profile][kids]" type="text" value="{{user.Profile.kids}}"># of Kids<h5>
-          <h5><input name="user[profile][pets]" type="text" value="{{user.Profile.pets}}"> pets<h5>
-          <h5><input name="user[profile][occupation]" type="text" value="{{user.Profile.occupation}}"><h5>
-          <h5><input name="user[profile][education]" type="text" value="{{user.Profile.education}}"><h5>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-2">
+          <div class="form-group">
+            <label for="user_age"><h4>Age</h4></label>
+            <input type="number" id="user_age" name="user[profile][age]" class="form-control" value="{{ user.Profile.age }}">
+          </div>
+          <div class="form-group">
+            <label for="user_height">Height (Inches)</label>
+            <input type="number" id="user_height" name="user[profile][height]" class="form-control" value="{{ user.Profile.height }}">
+          </div>
+          <div class="form-group">
+            <label for="user_city"><h4>City</h4></label>
+            <input type="text" id="user_city" name="user[profile][location][city]" class="form-control" value="{{ user.Profile.Location.city }}">
+          </div>
+          <div class="form-group">
+            <label for="user_state"><h4>State</h4></label>
+            <input type="text" id="user_state" name="user[profile][location][state]" class="form-control" value="{{ user.Profile.Location.state }}">
+          </div>
+        </div>
+      </div>
+
+      <input type="hidden" name="_method" value="PUT">
+      
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+
+          <h4>About Me</h4>
+          <div class="form-group">
+            <textarea type="text" placeholder="{{ user.Profile.aboutMe }}" value="{{ user.Profile.aboutMe }}" name="user[profile][aboutMe]" class="form-control" rows="4"></textarea>
+          </div>
+          <h4>Talents</h4>
+          <div class="form-group">
+            <textarea type="text" placeholder="{{ user.Profile.talents }}" value="{{ user.Profile.talents }}" name="user[profile][talents]" class="form-control" rows="4"></textarea>
+          </div>
+          <h4>Favorite Things</h4>
+          <div class="form-group">
+            <textarea type="text" placeholder="{{ user.Profile.favorites }}" value="{{ user.Profile.favorites }}" name="user[profile][favorites]" class="form-control" rows="4"></textarea>
+          </div>
+           <h4>Hobbies</h4>
+          <div class="form-group">
+            <textarea type="text" placeholder="{{ user.Profile.hobbies }}" value="{{ user.Profile.hobbies }}" name="user[profile][hobbies]" class="form-control" rows="4"></textarea>
+          </div>
+          <h4>Why Message Me?</h4>
+          <div class="form-group">
+            <textarea type="text" placeholder="{{ user.Profile.whyMe }}" valu="{{ user.Profile.whyMe }}" name="user[profile][whyMe]" class="form-control" rows="4"></textarea>
+          </div>
+        
+          <div class="form-group">
+            <label for="user_gender">Gender</label><br>
+            <input type="radio" name="user[profile][gender]" value="Male" {{{setChecked 'Male' user.Profile.gender}}}> Male<br>
+            <input type="radio" name="user[profile][gender]" value="Female" {{{setChecked 'Female' user.Profile.gender}}}> Female<br>
+          </div>
+
+          <div class="form-group">
+            <label for="user_maritalStatus">Marital Status</label><br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Single" {{{setChecked 'Single' user.Profile.maritalStatus}}}> Single<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Engaged" {{{setChecked 'Engaged' user.Profile.maritalStatus}}}> Engaged<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Married" {{{setChecked 'Married' user.Profile.maritalStatus}}}> Married<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Separated" {{{setChecked 'Separated' user.Profile.maritalStatus}}}> Separated<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Divorced" {{{setChecked 'Divorced' user.Profile.maritalStatus}}}> Divorced<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="Widowed" {{{setChecked 'Widowed' user.Profile.maritalStatus}}}> Widowed<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="In a civil union" {{{setChecked 'In a civil union' user.Profile.maritalStatus}}}> Civil Union<br>
+            <input type="radio" name="user[profile][maritalStatus]" value="In a relationship" {{{setChecked 'In a relationship' user.Profile.maritalStatus}}}> In Relationship<br>
+            <input type="radio" name="user[profile][maritalStatus]" value=`It's complicated` {{{setChecked "It's complicated" user.Profile.maritalStatus}}}> It's Complicated<br>
+          </div>
+
+          <div class="form-group">
+            <label for="user_bodyType">Body Type</label><br>
+            <input type="radio" name="user[profile][bodyType]" value="Slender" {{{setChecked 'Slender' user.Profile.bodyType}}}> Slender<br>
+            <input type="radio" name="user[profile][bodyType]" value="Average" {{{setChecked 'Average' user.Profile.bodyType}}}> Average<br>
+            <input type="radio" name="user[profile][bodyType]" value="Curvy" {{{setChecked 'Curvy' user.Profile.bodyType}}}> Curvy<br>
+            <input type="radio" name="user[profile][bodyType]" value="Chubby" {{{setChecked 'Chubby' user.Profile.bodyType}}}> Chubby<br>
+            <input type="radio" name="user[profile][bodyType]" value="Toned" {{{setChecked 'Toned' user.Profile.bodyType}}}> Toned<br>
+            <input type="radio" name="user[profile][bodyType]" value="Heavyset" {{{setChecked 'Heavyset' user.Profile.bodyType}}}> Heavyset<br>
+            <input type="radio" name="user[profile][bodyType]" value="Tall" {{{setChecked 'Tall' user.Profile.bodyType}}}> Tall<br>
+            <input type="radio" name="user[profile][bodyType]" value="Petite" {{{setChecked 'Petite' user.Profile.bodyType}}}> Petite<br>
+          </div>
+
+          <div class="form-group">
+            <label for="user_kids">Has children?</label><br>
+            <input type="radio" name="user[profile][kids]" value="true" {{{setChecked 'true' user.Profile.kids}}}> Yes<br>
+            <input type="radio" name="user[profile][kids]" value="false" {{{setChecked 'false' user.Profile.kids}}}> No<br>
+          </div>
+
+          <!--
+
+          <div class="form-group">
+            <label for="user_pets">Pets</label><br>
+            <input type="radio" name="user[profile][pets]" value="None" {{{setChecked 'None' user.Profile.pets}}}> None<br>
+            <input type="radio" name="user[profile][pets]" value="Dogs" {{{setChecked 'Dogs' user.Profile.pets}}}> Dogs<br>
+            <input type="radio" name="user[profile][pets]" value="Cats" {{{setChecked 'Cats' user.Profile.pets}}}> Cats<br>
+            <input type="radio" name="user[profile][pets]" value="Horses" {{{setChecked 'Horses' user.Profile.pets}}}> Horses<br>
+            <input type="radio" name="user[profile][pets]" value="Other" {{{setChecked 'Other' user.Profile.pets}}}> Other<br>
+          </div>
+
+          -->
+          
+          <div class="form-group">
+            <label for="user_education">Education</label><br>
+            <input type="radio" name="user[profile][education]" value="High School" {{{setChecked 'High School' user.Profile.education}}}> High School<br>
+            <input type="radio" name="user[profile][education]" value="Bachelors" {{{setChecked 'Bachelors' user.Profile.education}}}> Bachelors<br>
+            <input type="radio" name="user[profile][education]" value="Graduate" {{{setChecked 'Graduate' user.Profile.education}}}> Graduate<br>
+            <input type="radio" name="user[profile][education]" value="Post Graduate" {{{setChecked 'Post Graduate' user.Profile.education}}}> Post Graduate<br>
+            <input type="radio" name="user[profile][education]" value="PhD" {{{setChecked 'PhD' user.Profile.education}}}> PhD<br>
+            <input type="radio" name="user[profile][education]" value="Medicine" {{{setChecked 'Medicine' user.Profile.education}}}> Medicine<br>
+            <input type="radio" name="user[profile][education]" value="Law" {{{setChecked 'Law' user.Profile.education}}}> Law<br>
+            <input type="radio" name="user[profile][education]" value="Engineering" {{{setChecked 'Engineering' user.Profile.education}}}> Engineering<br>
+          </div>
+
+          <div class="form-group">
+            <label for="user_occupation">Occupation</label>
+            <input type="text" id="user_occupation" name="user[profile][occupation]" class="form-control" value="{{ user.Profile.occupation }}">
+          </div>
+
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-offset-5 col-sm-2">
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary btn-block" value="Save Changes">
+          </div>
         </div>
       </div>
     </div>
