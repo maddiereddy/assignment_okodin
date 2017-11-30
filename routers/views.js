@@ -23,7 +23,30 @@ module.exports = app => {
         },
         include: [{model: Profile}]
       }).then(users => {
-        res.render("views/index", { users });
+        var title = "All profiles I have viewed"
+        res.render("views/index", { users, title });
+      });
+    });
+  });
+
+  router.get("/viewedBy", (req, res) => {
+    User.find({
+      where: {
+        email: req.session.currentUser.email
+      },
+      include: [{model: Profile}]
+    }).then(userMe => {
+      User.findAll({
+        where: {
+          email: {
+            $ne: userMe.email
+          },
+          profileId: userMe.Profile.viewedBy
+        },
+        include: [{model: Profile}]
+      }).then(users => {
+        var title = "All profiles who have viewed me"
+        res.render("views/index", { users, title });
       });
     });
   });

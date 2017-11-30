@@ -50,7 +50,7 @@ router.get("/:id", (req, res) => {
     },
     include: [{ model: Profile, include: [{ model: Location}] }]
   }).then(viewee => {
-    user= viewee;
+    user = viewee;
 
     User.find({
       where: {
@@ -58,24 +58,36 @@ router.get("/:id", (req, res) => {
       },
       include: [{model: Profile}]
     }).then(viewer => {
-      // add user id to subscriber's views array
+      // add user id to viewer's views array
       var newArray = viewer.Profile.views;
       newArray.push(user.id);
+
+      // and, add viewer's user id to the viewee's viewedBy array
+      var viewedByArray = user.Profile.viewedBy;
+      viewedByArray.push(viewer.id);
+
       Profile.update(
+      {
+        views: newArray,
+        viewedBy: viewedByArray
+      },
+      {
+        where: { id: viewer.profileId }
+      }).then(() => {
+        Profile.update(
         {
-          views: newArray
+          viewedBy: viewedByArray
         },
         {
-          where: {
-            id: viewer.profileId
-          }
+          where: { id: user.profileId }
         })
       });
-    }).then(() => {
-      if (user.id !== null && user.id === req.session.currentUser.id) canEdit = true;
-      res.render("users/show", { user, canEdit });
     });
+  }).then(() => {
+    if (user.id !== null && user.id === req.session.currentUser.id) canEdit = true;
+    res.render("users/show", { user, canEdit });
   });
+});
 
 router.put('/:id', (req, res) => {
   
