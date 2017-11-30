@@ -7,6 +7,27 @@ var sequelize = models.sequelize;
 
 module.exports = app => {
 
+  router.get("/views", (req, res) => {
+    User.find({
+      where: {
+        email: req.session.currentUser.email
+      },
+      include: [{model: Profile}]
+    }).then(userMe => {
+      User.findAll({
+        where: {
+          email: {
+            $ne: userMe.email
+          },
+          profileId: userMe.Profile.views
+        },
+        include: [{model: Profile}]
+      }).then(users => {
+        res.render("views/index", { users });
+      });
+    });
+  });
+
   router.get("/likes", (req, res) => {
     User.find({
       where: {
@@ -19,7 +40,7 @@ module.exports = app => {
           email: {
             $ne: userMe.email
           },
-          profileId: userMe.Profile.likes
+          id: userMe.Profile.likes
         },
         include: [{model: Profile}]
       }).then(users => {
@@ -43,7 +64,7 @@ module.exports = app => {
         },
         {
           where: {
-            id: userMe.Profile.id
+            id: userMe.profileId
           }
         }
       ).then(() => {

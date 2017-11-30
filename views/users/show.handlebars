@@ -33,6 +33,8 @@
       <a href="#"><button class="btn btn-default btn-primary">Message Me!</button></a>
       {{#if canEdit}}
       	<a href="/users/edit"><button class="btn btn-default btn-primary">Edit Profile</button></a>
+      {{else}}
+       <a href="/views/likeUser/{{user.id}}"><button class="btn btn-default btn-primary">Like Me!</button></a>
       {{/if}}
     </div>
     <div class="col-xs-3" >

@@ -42,18 +42,40 @@ router.get("/edit", (req, res) => {
 
 router.get("/:id", (req, res) => {
 	let canEdit = false;
+  let user;
 
   User.find({
     where: {
       id: req.params.id
     },
     include: [{ model: Profile, include: [{ model: Location}] }]
-  })
-  .then(user => {
-  	if (user.id !== null && user.id === req.session.currentUser.id) canEdit = true;
-	  res.render("users/show", { user, canEdit });
-	});
-});
+  }).then(viewee => {
+    user= viewee;
+
+    User.find({
+      where: {
+        email: req.session.currentUser.email
+      },
+      include: [{model: Profile}]
+    }).then(viewer => {
+      // add user id to subscriber's views array
+      var newArray = viewer.Profile.views;
+      newArray.push(user.id);
+      Profile.update(
+        {
+          views: newArray
+        },
+        {
+          where: {
+            id: viewer.profileId
+          }
+        })
+      });
+    }).then(() => {
+      if (user.id !== null && user.id === req.session.currentUser.id) canEdit = true;
+      res.render("users/show", { user, canEdit });
+    });
+  });
 
 router.put('/:id', (req, res) => {
   
