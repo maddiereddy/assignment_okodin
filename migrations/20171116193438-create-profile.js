@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       height: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
       bodyType: {
         type: Sequelize.STRING

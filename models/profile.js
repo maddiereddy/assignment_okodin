@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     age: DataTypes.INTEGER,
     gender: DataTypes.STRING,
     maritalStatus: DataTypes.STRING,
-    height: DataTypes.STRING,
+    height: DataTypes.INTEGER,
     bodyType: DataTypes.STRING,
     kids: DataTypes.BOOLEAN,
     pets: DataTypes.ARRAY(DataTypes.TEXT),

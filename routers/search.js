@@ -115,6 +115,10 @@ module.exports = app => {
       order: order
     }).then(users => {
       var search = req.body.user.profile;
+      search.gender = req.body.user.profile.gender || "Female";
+      search.kids  = req.body.user.profile.kids || 'false';
+      search.maxHeight  = req.body.user.profile.maxHeight || 100;
+      search.pets = req.body.user.profile.pets || ["Other"];
       res.render("search/index", { users, search, lastSort });
     });
   });

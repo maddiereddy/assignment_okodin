@@ -45,13 +45,13 @@
           <label for="user_age">Min Age</label>
           <select name="user[profile][ageMin]" id="user_age" class="form-control">
             {{#setSelect search.ageMin}}
-              <option value="0">Any</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-              <option value="60">60</option>
-              <option value="70">70</option>
+              <option value=0>Any</option>
+              <option value=20>20</option>
+              <option value=30>30</option>
+              <option value=40>40</option>
+              <option value=50>50</option>
+              <option value=60>60</option>
+              <option value=70>70</option>
             {{/setSelect}}
           </select>
         </div>
@@ -60,13 +60,13 @@
           <label for="user_age">Max Age</label>
           <select name="user[profile][ageMax]" id="user_age" class="form-control">
             {{#setSelect search.ageMax}}
-              <option value="100">Any</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-              <option value="60">60</option>
-              <option value="70">70</option>
-              <option value="80">80</option>
+              <option value=100>Any</option>
+              <option value=30>30</option>
+              <option value=40>40</option>
+              <option value=50>50</option>
+              <option value=60>60</option>
+              <option value=70>70</option>
+              <option value=80>80</option>
             {{/setSelect}}
           </select>
         </div>
@@ -75,12 +75,12 @@
           <label for="user_locationDistance">Distance Max</label>
           <select name="user[profile][location][distance]" id="user_locationDistance" class="form-control">
             {{#setSelect search.location.distance}}
-              <option value="10000">Any</option>
-              <option value="100">100 miles</option>
-              <option value="50">50 miles</option>
-              <option value="25">25 miles</option>
-              <option value="10">10 miles</option>
-              <option value="5">5 miles</option>
+              <option value=10000>Any</option>
+              <option value=100>100 miles</option>
+              <option value=50>50 miles</option>
+              <option value=25>25 miles</option>
+              <option value=10>10 miles</option>
+              <option value=5>5 miles</option>
             {{/setSelect}}
           </select>
         </div>
@@ -109,10 +109,10 @@
           <label for="user_height">Height - Min</label>
           <select name="user[profile][heightMin]" id="user_height" class="form-control">
             {{#setSelect search.heightMin}}
-            <option value="0">Any</option>
-            <option value="60">5'0"</option>
-            <option value="66">5'6"</option>
-            <option value="72">6'0"</option>
+            <option value=0>Any</option>
+            <option value=60>5'0"</option>
+            <option value=66>5'6"</option>
+            <option value=72>6'0"</option>
             {{/setSelect}}
           </select>
         </div>
@@ -121,10 +121,10 @@
           <label for="user_height">Height - Max</label>
           <select name="user[profile][heightMax]" id="user_height" class="form-control">
             {{#setSelect search.heightMax}}
-              <option value="100">Any</option>
-              <option value="66">5'6"</option>
-              <option value="72">6'0"</option>
-              <option value="78">6'6"</option>
+              <option value=100>Any</option>
+              <option value=66>5'6"</option>
+              <option value=72>6'0"</option>
+              <option value=78>6'6"</option>
             {{/setSelect}}
           </select>
         </div>
@@ -152,10 +152,10 @@
           <label>Children</label>
           <div class="radio">
             <label>
-              <input type="radio" value="false" name="user[profile][kids]" {{{setChecked 'false' search.kids}}}> None
+              <input type="radio" value='false' name="user[profile][kids]" {{{setChecked 'false' search.kids}}}> None
             </label>
             <label>
-              <input type="radio" value="true" name="user[profile][kids]" {{{setChecked 'true' search.kids}}}> Some
+              <input type="radio" value='true' name="user[profile][kids]" {{{setChecked 'true' search.kids}}}> Some
             </label>
           </div>
         </div>

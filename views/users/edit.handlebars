@@ -97,8 +97,8 @@
 
           <div class="form-group">
             <label for="user_kids">Has children?</label><br>
-            <input type="radio" name="user[profile][kids]" value="true" {{{setChecked 'true' user.Profile.kids}}}> Yes<br>
-            <input type="radio" name="user[profile][kids]" value="false" {{{setChecked 'false' user.Profile.kids}}}> No<br>
+            <input type="radio" name="user[profile][kids]" value=true {{{setChecked true user.Profile.kids}}}> Yes<br>
+            <input type="radio" name="user[profile][kids]" value=false {{{setChecked false user.Profile.kids}}}> No<br>
           </div>
 
           <!--
@@ -113,7 +113,7 @@
           </div>
 
           -->
-          
+
           <div class="form-group">
             <label for="user_education">Education</label><br>
             <input type="radio" name="user[profile][education]" value="High School" {{{setChecked 'High School' user.Profile.education}}}> High School<br>
